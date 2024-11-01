@@ -14,7 +14,7 @@ void log_error(const std::string& test_name, const std::string& message) {
 }
 
 template <typename Func>
-int run_test(const std::string& test_name, Func test_func, bool silent) {
+int run_test(const std::string& test_name, Func test_func, const bool silent) {
     int local_failed_tests = 0;
 
     try {
