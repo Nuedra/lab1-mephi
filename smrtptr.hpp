@@ -47,7 +47,7 @@ public:
         throw std::logic_error("Error!");
     }
 
-    const T* operator->() const {
+    T* operator->() const {
         if (ptr != nullptr) return ptr;
         throw std::logic_error("Error!");
     }
@@ -55,6 +55,10 @@ public:
     // Получение текущего значения счетчика ссылок
     [[nodiscard]] size_t use_count() const {
         return *ref_count;
+    }
+
+    bool null() const {
+        return ptr == nullptr;
     }
 
 
@@ -69,7 +73,7 @@ private:
 
     void release() const {
         if (--(*ref_count) == 0) {  // Уменьшаем счетчик, удаляем, если он обнуляется
-            delete ptr;
+            delete[] ptr;
             delete[] ref_count;
         }
     }

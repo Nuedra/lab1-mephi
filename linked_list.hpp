@@ -2,6 +2,7 @@
 #define LINKED_LIST_HPP
 
 #include "smrtptr.hpp"
+#include <iostream>
 
 template<typename T>
 struct Node {
@@ -21,13 +22,13 @@ public:
     LinkedList() : head(nullptr), length(0) {}
 
     void push_front(const T& value) {
-        SmrtPtr<Node<T>> newNode = SmrtPtr<Node<T>>(new Node<T>(value));
+        SmrtPtr<Node<T>> newNode(new Node<T>(value));
         newNode->next = std::move(head);
         head = std::move(newNode);
         ++length;
     }
 
-    bool null(){
+    bool null() const {
         return head.null();
     }
 
@@ -39,7 +40,14 @@ public:
         }
     }
 
-    [[nodiscard]] size_t size() const {
+    const T& get_front() const {
+        if (!head.null()) {
+            return head->data;
+        }
+        throw std::out_of_range("List is empty");
+    }
+
+    size_t size() const {
         return length;
     }
 
@@ -51,13 +59,6 @@ public:
 
     ~LinkedList(){
         clear();
-    }
-
-
-    T& get_front() const {
-        if(!head.null()){
-            return head->data;
-        }
     }
 
 };
