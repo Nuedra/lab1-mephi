@@ -47,10 +47,6 @@ template <template <typename> class PtrType>
 long run_load_tests(long& num_allocations) {
     long duration = measure_allocation_time<PtrType>(num_allocations);
 
-    if (duration != -1) {
-        std::cout << "Load Test: Time: " << duration << " ms\n";
-    }
-
     return duration;
 }
 
