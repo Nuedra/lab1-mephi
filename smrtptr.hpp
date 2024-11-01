@@ -56,6 +56,8 @@ public:
     [[nodiscard]] size_t use_count() const {
         return *ref_count;
     }
+
+
 };
 
 
@@ -108,7 +110,8 @@ public:
     }
 
     const T& operator[](size_t index) const {
-        return ptr[index];
+        if (ptr != nullptr) return ptr[index];
+        throw std::logic_error("Error!");
     }
 
     // Получение текущего значения счетчика ссылок
