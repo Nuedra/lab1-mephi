@@ -123,5 +123,4 @@ public:
     }
 };
 
-
 #endif //LAB1_SMRTPTR_HPP
