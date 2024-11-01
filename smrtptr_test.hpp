@@ -6,9 +6,15 @@
 #include <iostream>
 #include <exception>
 
+void log_error(const std::string& test_name, const std::string& message);
+
+// Вспомогательная функция для выполнения теста с перехватом исключений
+template <typename Func>
+int run_test(const std::string& test_name, Func test_func, bool silent = false);
 
 int functional_SmrtPtr_tests();
 int functional_LinkedList_tests();
+
 
 template <template <typename> class PtrType>
 long measure_allocation_time(long& num_allocations) {

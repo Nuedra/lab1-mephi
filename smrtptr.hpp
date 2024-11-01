@@ -43,7 +43,7 @@ public:
 
     T& operator*() const {
         if (ptr != nullptr) return *ptr;
-        throw std::logic_error("Error!");
+        throw std::logic_error("Errbvcbcvbcvor!");
     }
 
     T* operator->() const {
