@@ -3,7 +3,6 @@
 
 #include <stdexcept>
 
-
 template <typename T>
 class SmrtPtr {
 private:
@@ -23,7 +22,7 @@ public:
 
     // Копирующий конструктор
     SmrtPtr(const SmrtPtr<T> &other) : ptr(other.ptr), ref_count(other.ref_count) {
-        ++(*ref_count);      // Увеличиваем счетчик ссылок
+        ++(*ref_count);
     }
 
     // Деструктор
@@ -33,16 +32,16 @@ public:
 
     // Оператор присваивания
     SmrtPtr<T>& operator=(const SmrtPtr<T> &other) {
-        if (this != &other) {  // Проверка на само присваивание
-            release();         // Освобождение текущего объекта
+        if (this != &other) {
+            release();
             ptr = other.ptr;
             ref_count = other.ref_count;
-            ++(*ref_count);    // Увеличиваем счетчик ссылок
+            ++(*ref_count);
         }
         return *this;
     }
 
-    const T& operator*() const {
+    T& operator*() const {
         if (ptr != nullptr) return *ptr;
         throw std::logic_error("Error!");
     }
@@ -52,7 +51,7 @@ public:
         throw std::logic_error("Error!");
     }
 
-    // Получение текущего значения счетчика ссылок
+
     [[nodiscard]] size_t use_count() const {
         return *ref_count;
     }
@@ -68,11 +67,11 @@ public:
 template <typename T>
 class SmrtPtr<T[]> {
 private:
-    T* ptr;                  // Указатель на управляемый объект
-    size_t* ref_count;       // Указатель на счетчик ссылок
+    T* ptr;
+    size_t* ref_count;
 
     void release() const {
-        if (--(*ref_count) == 0) {  // Уменьшаем счетчик, удаляем, если он обнуляется
+        if (--(*ref_count) == 0) {
             delete[] ptr;
             delete[] ref_count;
         }
@@ -84,41 +83,41 @@ public:
 
     // Копирующий конструктор
     SmrtPtr(const SmrtPtr<T[]> &other) : ptr(other.ptr), ref_count(other.ref_count) {
-        ++(*ref_count);      // Увеличиваем счетчик ссылок
+        ++(*ref_count);
     }
 
-    // Деструктор
+
     ~SmrtPtr() {
         release();
     }
 
     // Оператор присваивания
     SmrtPtr<T[]>& operator=(const SmrtPtr<T[]> &other) {
-        if (this != &other) {  // Проверка на самоприсваивание
-            release();         // Освобождение текущего объекта
+        if (this != &other) {
+            release();
             ptr = other.ptr;
             ref_count = other.ref_count;
-            ++(*ref_count);    // Увеличиваем счетчик ссылок
+            ++(*ref_count);
         }
         return *this;
     }
 
-    const T& operator*() const {
+    T& operator*() const {
         if (ptr != nullptr) return *ptr;
         throw std::logic_error("Error!");
     }
 
-    const T* operator->() const {
+    T* operator->() const {
         if (ptr != nullptr) return ptr;
         throw std::logic_error("Error!");
     }
 
-    const T& operator[](size_t index) const {
+    T& operator[](size_t index) const {
         if (ptr != nullptr) return ptr[index];
         throw std::logic_error("Error!");
     }
 
-    // Получение текущего значения счетчика ссылок
+
     [[nodiscard]] size_t use_count() const {
         return *ref_count;
     }

@@ -7,5 +7,5 @@ add_executable(lab1 main.cpp
         smrtptr.hpp
         linked_list.hpp
         smrtptr_tests.cpp
-        smrtptr_test.h
+        smrtptr_test.hpp
 )

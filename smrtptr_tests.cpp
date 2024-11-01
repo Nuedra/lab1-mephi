@@ -1,8 +1,10 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <chrono>
+#include <exception>
 #include "smrtptr.hpp"
-#include "smrtptr_test.h"
+#include "smrtptr_test.hpp"
 #include "linked_list.hpp"
 #include <cassert>
 
@@ -134,16 +136,16 @@ int functional_LinkedList_tests() {
     // Test 1: Default Constructor and Size
     {
         LinkedList<int> list;
-        assert(list.size() == 0);  // List should be empty initially
-        assert(list.null());        // Head should be null
+        assert(list.size() == 0);
+        assert(list.null());
     }
 
     // Test 2: Push Front and Get Front
     {
         LinkedList<int> list;
-        list.push_front(10);          // Add one element
-        assert(list.size() == 1);     // Size should now be 1
-        assert(list.get_front() == 10); // Front element should be 10
+        list.push_front(10);
+        assert(list.size() == 1);
+        assert(list.get_front() == 10);
     }
 
     // Test 3: Multiple Push Fronts and Size Check
@@ -152,8 +154,8 @@ int functional_LinkedList_tests() {
         list.push_front(10);
         list.push_front(20);
         list.push_front(30);
-        assert(list.size() == 3);     // Size should reflect three elements
-        assert(list.get_front() == 30); // Front should be the last pushed value (30)
+        assert(list.size() == 3);
+        assert(list.get_front() == 30);
     }
 
     // Test 4: Pop Front and Size Check
@@ -163,17 +165,17 @@ int functional_LinkedList_tests() {
         list.push_front(20);
         list.push_front(30);
 
-        list.pop_front();             // Remove the first element (30)
-        assert(list.size() == 2);     // Size should be 2
-        assert(list.get_front() == 20); // Front should now be 20
+        list.pop_front();
+        assert(list.size() == 2);
+        assert(list.get_front() == 20);
 
-        list.pop_front();             // Remove the new front (20)
-        assert(list.size() == 1);     // Size should be 1
-        assert(list.get_front() == 10); // Front should now be 10
+        list.pop_front();
+        assert(list.size() == 1);
+        assert(list.get_front() == 10);
 
-        list.pop_front();             // Remove the last element (10)
-        assert(list.size() == 0);     // List should now be empty
-        assert(list.null());          // Head should be null
+        list.pop_front();
+        assert(list.size() == 0);
+        assert(list.null());
     }
 
     // Test 5: Clear and Null Check
@@ -182,29 +184,34 @@ int functional_LinkedList_tests() {
         list.push_front(10);
         list.push_front(20);
         list.push_front(30);
-        list.clear();                 // Clear all elements
-        assert(list.size() == 0);     // Size should be 0 after clear
-        assert(list.null());          // Head should be null
+        list.clear();
+        assert(list.size() == 0);
+        assert(list.null());
     }
 
     // Test 6: Mixed Operations
     {
         LinkedList<int> list;
-        list.push_front(10);          // Add one element
+        list.push_front(10);
         assert(list.get_front() == 10);
 
-        list.push_front(20);          // Add another element
+        list.push_front(20);
         assert(list.get_front() == 20);
 
-        list.pop_front();             // Remove the front element
+        list.pop_front();
         assert(list.get_front() == 10);
 
-        list.clear();                 // Clear the list
-        assert(list.null());          // Head should be null after clear
-        assert(list.size() == 0);     // Size should be 0 after clear
+        list.clear();
+        assert(list.null());
+        assert(list.size() == 0);
     }
 
     return 0;
 }
+
+
+
+
+
 
 
