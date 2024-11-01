@@ -1,7 +1,8 @@
 #ifndef LAB1_SMRTPTR_HPP
 #define LAB1_SMRTPTR_HPP
 
-#include <optional>
+#include <stdexcept>
+
 
 template <typename T>
 class SmrtPtr {
@@ -9,10 +10,10 @@ private:
     T* ptr;                  // Указатель на управляемый объект
     size_t* ref_count;       // Указатель на счетчик ссылок
 
-    void release() {
+    void release() const{
         if (--(*ref_count) == 0) {  // Уменьшаем счетчик, удаляем, если он обнуляется
             delete ptr;
-            delete[] ref_count;
+            delete ref_count;
         }
     }
 
@@ -32,7 +33,7 @@ public:
 
     // Оператор присваивания
     SmrtPtr<T>& operator=(const SmrtPtr<T> &other) {
-        if (this != &other) {  // Проверка на самоприсваивание
+        if (this != &other) {  // Проверка на само присваивание
             release();         // Освобождение текущего объекта
             ptr = other.ptr;
             ref_count = other.ref_count;
@@ -42,13 +43,13 @@ public:
     }
 
     const T& operator*() const {
-        if (ptr == nullptr) {
-            throw std::logic_error;
-        } else return *ptr;
+        if (ptr != nullptr) return *ptr;
+        throw std::logic_error("Error!");
     }
 
     const T* operator->() const {
-        return ptr;
+        if (ptr != nullptr) return ptr;
+        throw std::logic_error("Error!");
     }
 
     // Получение текущего значения счетчика ссылок
@@ -57,13 +58,14 @@ public:
     }
 };
 
+
 template <typename T>
 class SmrtPtr<T[]> {
 private:
     T* ptr;                  // Указатель на управляемый объект
     size_t* ref_count;       // Указатель на счетчик ссылок
 
-    void release() {
+    void release() const {
         if (--(*ref_count) == 0) {  // Уменьшаем счетчик, удаляем, если он обнуляется
             delete ptr;
             delete[] ref_count;
@@ -95,12 +97,18 @@ public:
         return *this;
     }
 
-    std::optional<T[]> operator*() const {
-        return ptr ? std::optional<T[]>(*ptr) : std::nullopt;
+    const T& operator*() const {
+        if (ptr != nullptr) return *ptr;
+        throw std::logic_error("Error!");
     }
 
-    std::optional<T[]> operator->() const {
-        return ptr ? std::optional<T[]>(*ptr) : std::nullopt;
+    const T* operator->() const {
+        if (ptr != nullptr) return ptr;
+        throw std::logic_error("Error!");
+    }
+
+    const T& operator[](size_t index) const {
+        return ptr[index];
     }
 
     // Получение текущего значения счетчика ссылок
