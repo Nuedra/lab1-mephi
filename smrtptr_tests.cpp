@@ -4,7 +4,7 @@
 #include <chrono>
 #include <exception>
 #include "smrtptr.hpp"
-#include "smrtptr_test.hpp"
+#include "smrtptr_tests.hpp"
 #include "linked_list.hpp"
 #include <cassert>
 

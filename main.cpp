@@ -2,7 +2,7 @@
 #include <sstream>
 
 #include "smrtptr.hpp"
-#include "smrtptr_test.hpp"
+#include "smrtptr_tests.hpp"
 
 int main() {
     long size_test = 10000000;
