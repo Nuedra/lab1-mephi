@@ -41,7 +41,6 @@ long allocation_time(long& num_allocations) {
     return -1;
 }
 
-
 // Базовый и производный классы для тестов
 class C2 {
 public:
@@ -55,7 +54,6 @@ public:
 };
 
 // Для Графиков
-
 std::vector<int> generate_test_sizes(int start_size, int end_size, int step_size);
 
 std::vector<std::pair<long, long>> load_smrt_ptr_tests(int start_size, int end_size, int step_size);

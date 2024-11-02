@@ -161,9 +161,7 @@ int functional_smrt_ptr_tests() {
     return failed_tests;
 }
 
-
 // Заполнения векторов для отрисовки графиков
-
 // Функция для генерации размеров тестов
 std::vector<int> generate_test_sizes(int start_size, int end_size, int step_size) {
     std::vector<int> test_sizes;
@@ -180,13 +178,12 @@ std::vector<std::pair<long, long>> load_smrt_ptr_tests(int start_size, int end_s
 
     for (int test_size : test_sizes) {
         auto start = std::chrono::high_resolution_clock::now();
-        {
+
             std::vector<smrt_ptr<int>> pointers;
-            smrt_ptr<int> sptr(new int(3));
+            pointers.reserve(test_size);
             for (int i = 0; i < test_size; ++i) {
-                pointers.push_back(sptr);
+                pointers.push_back(smrt_ptr<int>(new int(i)));
             }
-        }
 
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::high_resolution_clock::now() - start).count();
@@ -203,9 +200,11 @@ std::vector<std::pair<long, long>> load_unique_ptr_tests(int start_size, int end
 
     for (int test_size : test_sizes) {
         auto start = std::chrono::high_resolution_clock::now();
+
         std::vector<std::unique_ptr<int>> pointers;
+        pointers.reserve(test_size);
         for (int i = 0; i < test_size; ++i) {
-            pointers.push_back(std::make_unique<int>(i));
+            pointers.push_back(std::unique_ptr<int>(new int(i)));
         }
 
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -225,8 +224,9 @@ std::vector<std::pair<long, long>> load_shrd_ptr_tests(int start_size, int end_s
         auto start = std::chrono::high_resolution_clock::now();
 
         std::vector<std::shared_ptr<int>> pointers;
+        pointers.reserve(test_size);
         for (int i = 0; i < test_size; ++i) {
-            pointers.push_back(std::make_shared<int>(i));
+            pointers.push_back(std::shared_ptr<int>(new int(i)));
         }
 
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(

@@ -1,4 +1,3 @@
-#include <SFML/Graphics.hpp>
 #include <iostream>
 #include "graphic.hpp"
 #include "smrt_ptr.hpp"
@@ -54,18 +53,18 @@ void run_load_tests() {
 
         switch (load_choice) {
             case 1:
-                std::cout << "Время выделения smrt_ptr: " << measure_allocation_time<smrt_ptr>(size_test) << " ms\n";
+                std::cout << "Время выделения smrt_ptr: " << allocation_time<smrt_ptr>(size_test) << " ms\n";
                 break;
             case 2:
-                std::cout << "Время выделения unique_ptr: " << measure_allocation_time<std::unique_ptr>(size_test) << " ms\n";
+                std::cout << "Время выделения unique_ptr: " << allocation_time<std::unique_ptr>(size_test) << " ms\n";
                 break;
             case 3:
-                std::cout << "Время выделения shared_ptr: " << measure_allocation_time<std::shared_ptr>(size_test) << " ms\n";
+                std::cout << "Время выделения shared_ptr: " << allocation_time<std::shared_ptr>(size_test) << " ms\n";
                 break;
             case 4:
-                std::cout << "Время выделения smrt_ptr: " << measure_allocation_time<smrt_ptr>(size_test) << " ms\n";
-                std::cout << "Время выделения unique_ptr: " << measure_allocation_time<std::unique_ptr>(size_test) << " ms\n";
-                std::cout << "Время выделения shared_ptr: " << measure_allocation_time<std::shared_ptr>(size_test) << " ms\n";
+                std::cout << "Время выделения smrt_ptr: " << allocation_time<smrt_ptr>(size_test) << " ms\n";
+                std::cout << "Время выделения unique_ptr: " << allocation_time<std::unique_ptr>(size_test) << " ms\n";
+                std::cout << "Время выделения shared_ptr: " << allocation_time<std::shared_ptr>(size_test) << " ms\n";
                 break;
         }
         std::cout << "\nНажмите Enter для продолжения...";
@@ -95,7 +94,7 @@ int main() {
                 break;
 
             case 3:
-                create_graphic(10000, 100000, 10000);
+                create_graphic(100000, 1000000, 100000);
                 break;
 
         }
