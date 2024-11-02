@@ -3,7 +3,6 @@
 
 #include "smrt_ptr.hpp"
 
-
 template<typename T>
 struct Node {
     T data;

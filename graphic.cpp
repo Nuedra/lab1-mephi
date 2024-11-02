@@ -2,11 +2,8 @@
 #include <vector>
 #include <utility>
 #include <string>
-#include <sstream>
-#include <iostream>
 #include "smrt_ptr_tests.hpp"
 #include "graphic.hpp"
-
 
 // Функция для горизонтального отображения легенды в верхней части окна
 void draw_legend(sf::RenderWindow& window, sf::Font& font) {
@@ -79,7 +76,7 @@ void create_graphic(int start_size, int end_size, int step_size) {
 
     sf::Font font;
     if (!font.loadFromFile("C:\\Users\\Vladislav\\CLionProjects\\lab1-mephi\\cmake-build-debug\\regular.ttf")) {
-        std::cerr << "Ошибка загрузки шрифта" << std::endl;
+
     }
 
     sf::Vector2f offset(0.f, 0.f);

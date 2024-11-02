@@ -1,7 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include <sstream>
-#include <memory>
 #include "graphic.hpp"
 #include "smrt_ptr.hpp"
 #include "smrt_ptr_tests.hpp"
@@ -16,7 +14,7 @@ void print_main_menu() {
 }
 
 void print_load_test_menu() {
-    std::cout << "\n=== Меню Тестов Производительности ===\n";
+    std::cout << "\n=== Меню Нагрузочных ===\n";
     std::cout << "1. Тестировать smrt_ptr\n";
     std::cout << "2. Тестировать unique_ptr\n";
     std::cout << "3. Тестировать shared_ptr\n";
@@ -31,10 +29,10 @@ int get_user_input(int max_option) {
         std::cin >> choice;
         if (std::cin.fail() || choice < 1 || choice > max_option) {
             std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.ignore(10000, '\n');
             std::cout << "Некорректный ввод. Пожалуйста, введите число от 1 до " << max_option << ": ";
         } else {
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.ignore(10000, '\n');
             return choice;
         }
     }

@@ -5,7 +5,6 @@
 #include <exception>
 #include "smrt_ptr.hpp"
 #include "smrt_ptr_tests.hpp"
-#include "linked_list.hpp"
 #include <cassert>
 #include <memory>
 #include <utility>
@@ -41,7 +40,7 @@ int run_test(const std::string& test_name, Func test_func, const bool silent) {
 int functional_smrt_ptr_tests() {
     int failed_tests = 0;
 
-    failed_tests += run_test("Test 1: Constructor and Dereference", []() {
+    failed_tests += run_test("Test 1", []() {
         smrt_ptr<int> p1(new int(10));
         assert(*p1 == 10);
         assert(p1.use_count() == 1);
@@ -57,7 +56,7 @@ int functional_smrt_ptr_tests() {
         assert(p3.use_count() == 1);
     });
 
-    failed_tests += run_test("Test 2: Copy Constructor", []() {
+    failed_tests += run_test("Test 2", []() {
         smrt_ptr<int> p1(new int(20));
         smrt_ptr<int> p2(p1);
         assert(p1.use_count() == 2);
@@ -79,7 +78,7 @@ int functional_smrt_ptr_tests() {
         assert((*p6)[2] == 6);
     });
 
-    failed_tests += run_test("Test 3: Assignment Operator", []() {
+    failed_tests += run_test("Test 3", []() {
         smrt_ptr<int> p1(new int(30));
         smrt_ptr<int> p2;
         p2 = p1;
@@ -89,7 +88,7 @@ int functional_smrt_ptr_tests() {
         assert(*p2 == 30);
     });
 
-    failed_tests += run_test("Test 4: Self-assignment Handling", []() {
+    failed_tests += run_test("Test 4", []() {
         smrt_ptr<int> p1(new int(40));
         p1 = p1;
 
@@ -97,7 +96,7 @@ int functional_smrt_ptr_tests() {
         assert(*p1 == 40);
     });
 
-    failed_tests += run_test("Test 5: Arrow Operator", []() {
+    failed_tests += run_test("Test 5", []() {
         struct TestStruct {
             int val;
             TestStruct(int v) : val(v) {}
@@ -107,7 +106,7 @@ int functional_smrt_ptr_tests() {
         assert(p1->val == 50);
     });
 
-    failed_tests += run_test("Test 6: Array Access for smrt_ptr<T[]>", []() {
+    failed_tests += run_test("Test 6", []() {
         smrt_ptr<int[]> p1(new int[3]{1, 2, 3});
 
         assert(p1[0] == 1);
@@ -115,7 +114,7 @@ int functional_smrt_ptr_tests() {
         assert(p1[2] == 3);
     });
 
-    failed_tests += run_test("Test 7: Null Dereference Exception", []() {
+    failed_tests += run_test("Test 7", []() {
         smrt_ptr<int> p1(nullptr);
         *p1;  // Ожидается, что бросит исключение
 
@@ -123,15 +122,15 @@ int functional_smrt_ptr_tests() {
     }, true);
 
 
-    failed_tests += run_test("Test 8: Null Array Access Exception", []() {
+    failed_tests += run_test("Test 8", []() {
         smrt_ptr<int[]> p1(nullptr);
         p1[0];  // Ожидается, что бросит исключение
         assert(false);  // Этот assert не должен быть достигнут
 
     }, true);
 
-    // Тест 9: Подтипизация и присваивание подтипов
-    failed_tests += run_test("Test 9: Subtyping Assignment", []() {
+
+    failed_tests += run_test("Test 9", []() {
         smrt_ptr<C1> derivedPtr(new C1());
         smrt_ptr<C2> basePtr = derivedPtr;
 
@@ -139,8 +138,8 @@ int functional_smrt_ptr_tests() {
         assert(derivedPtr.use_count() == 2);
     });
 
-    // Тест 10: Проверка счётчика ссылок при подтипизации
-    failed_tests += run_test("Test 10: Reference Counting with Subtyping", []() {
+
+    failed_tests += run_test("Test 10", []() {
         smrt_ptr<C1> derivedPtr1(new C1());
         smrt_ptr<C2> basePtr1 = derivedPtr1;
 
@@ -150,7 +149,7 @@ int functional_smrt_ptr_tests() {
         assert(basePtr1.use_count() == 3);
     });
 
-    failed_tests += run_test("Test 11: Subtyping Assignment for []", []() {
+    failed_tests += run_test("Test 11", []() {
         smrt_ptr<C1[]> derivedPtr(new C1[3]);
         smrt_ptr<C2[]> basePtr = derivedPtr;
 
@@ -174,7 +173,7 @@ std::vector<int> generate_test_sizes(int start_size, int end_size, int step_size
     return test_sizes;
 }
 
-// Функция тестирования для smrt_ptr
+// Функция заполнения для smrt_ptr
 std::vector<std::pair<long, long>> load_smrt_ptr_tests(int start_size, int end_size, int step_size) {
     std::vector<std::pair<long, long>> results;
     std::vector<int> test_sizes = generate_test_sizes(start_size, end_size, step_size);
@@ -197,7 +196,7 @@ std::vector<std::pair<long, long>> load_smrt_ptr_tests(int start_size, int end_s
     return results;
 }
 
-// Функция тестирования для unique_ptr
+// Функция заполнения для unique_ptr
 std::vector<std::pair<long, long>> load_unique_ptr_tests(int start_size, int end_size, int step_size) {
     std::vector<std::pair<long, long>> results;
     std::vector<int> test_sizes = generate_test_sizes(start_size, end_size, step_size);

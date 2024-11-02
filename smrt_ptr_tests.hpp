@@ -14,10 +14,8 @@ int run_test(const std::string& test_name, Func test_func, bool silent = false);
 
 int functional_smrt_ptr_tests();
 
-
-
 template <template <typename> class PtrType>
-long measure_allocation_time(long& num_allocations) {
+long allocation_time(long& num_allocations) {
     try {
         auto start = std::chrono::high_resolution_clock::now();
 
