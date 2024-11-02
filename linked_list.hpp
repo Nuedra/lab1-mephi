@@ -21,12 +21,6 @@ private:
 public:
     linked_list() : head(nullptr), length(0) {}
 
-    void push_front(const T& value) {
-        smrt_ptr<Node<T>> newNode(new Node<T>(value));
-        newNode->next = head;
-        head = std::move(newNode);
-        ++length;
-    }
 
     [[nodiscard]] bool null() const {
         return head.null();

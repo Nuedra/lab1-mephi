@@ -162,84 +162,6 @@ int functional_smrt_ptr_tests() {
     return failed_tests;
 }
 
-int functional_linked_list_tests() {
-    int failed_tests = 0;
-
-    failed_tests += run_test("Test 1: Default Constructor and Size", [](){
-        linked_list<int> list;
-
-        assert(list.size() == 0);
-        assert(list.null());
-    });
-
-    failed_tests += run_test("Test 2: Push Front and Get Front", [](){
-        linked_list<int> list;
-        list.push_front(10);
-
-        assert(list.size() == 1);
-        assert(list.get_front() == 10);
-    });
-
-    failed_tests += run_test("Test 3: Multiple Push Fronts and Size Check", [](){
-        linked_list<int> list;
-        list.push_front(10);
-        list.push_front(20);
-        list.push_front(30);
-
-        assert(list.size() == 3);
-        assert(list.get_front() == 30);
-    });
-
-    failed_tests += run_test("Test 4: Pop Front and Size Check", [](){
-        linked_list<int> list;
-        list.push_front(10);
-        list.push_front(20);
-        list.push_front(30);
-
-        list.pop_front();
-        assert(list.size() == 2);
-        assert(list.get_front() == 20);
-
-        list.pop_front();
-        assert(list.size() == 1);
-        assert(list.get_front() == 10);
-
-        list.pop_front();
-        assert(list.size() == 0);
-        assert(list.null());
-    });
-
-
-    failed_tests += run_test("Test 5: Clear and Null Check", [](){
-        linked_list<int> list;
-        list.push_front(10);
-        list.push_front(20);
-        list.push_front(30);
-        list.clear();
-
-        assert(list.size() == 0);
-        assert(list.null());
-    });
-
-    failed_tests += run_test("Test 6: Mixed Operations", [](){
-        linked_list<int> list;
-        list.push_front(10);
-        assert(list.get_front() == 10);
-
-        list.push_front(20);
-        assert(list.get_front() == 20);
-
-        list.pop_front();
-        assert(list.get_front() == 10);
-
-        list.clear();
-        assert(list.null());
-        assert(list.size() == 0);
-    });
-
-    return failed_tests;
-}
-
 
 // Заполнения векторов для отрисовки графиков
 
@@ -307,7 +229,6 @@ std::vector<std::pair<long, long>> load_shrd_ptr_tests(int start_size, int end_s
         for (int i = 0; i < test_size; ++i) {
             pointers.push_back(std::make_shared<int>(i));
         }
-
 
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
             std::chrono::high_resolution_clock::now() - start).count();

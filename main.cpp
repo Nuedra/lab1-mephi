@@ -9,11 +9,10 @@
 void print_main_menu() {
     std::cout << "\n=== Главное Меню ===\n";
     std::cout << "1. Запустить функциональные тесты smrt_ptr\n";
-    std::cout << "2. Запустить функциональные тесты linked_list\n";
-    std::cout << "3. Запустить тесты производительности\n";
-    std::cout << "4. Графики\n";
-    std::cout << "5. Выход\n";
-    std::cout << "Выберите опцию (1-5): ";
+    std::cout << "2. Запустить нагрузочный тест (Заполнение вектора)\n";
+    std::cout << "3. Вывод графиков\n";
+    std::cout << "4. Выход\n";
+    std::cout << "Выберите опцию (1-4):  ";
 }
 
 void print_load_test_menu() {
@@ -94,28 +93,21 @@ int main() {
                 break;
 
             case 2:
-                test_result = functional_linked_list_tests();
-                if (test_result == 0)
-                    std::cout << "Все функциональные тесты для linked_list успешно завершены.\n";
-                else
-                    std::cout << "Не все тесты пройдены. Обнаружены ошибки.\n";
-                break;
-
-            case 3:
                 run_load_tests();
                 break;
 
-            case 4:
+            case 3:
                 create_graphic(10000, 100000, 10000);
                 break;
+
         }
 
-        if (main_choice != 5) {
+        if (main_choice != 4) {
             std::cout << "\nНажмите Enter для возврата в главное меню...";
             std::cin.get();
         }
 
-    } while (main_choice != 5);
+    } while (main_choice != 4);
 
     std::cout << "Программа завершена.\n";
     return 0;

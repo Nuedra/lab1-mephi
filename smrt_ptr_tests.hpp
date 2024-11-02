@@ -13,7 +13,7 @@ template <typename Func>
 int run_test(const std::string& test_name, Func test_func, bool silent = false);
 
 int functional_smrt_ptr_tests();
-int functional_linked_list_tests();
+
 
 
 template <template <typename> class PtrType>
