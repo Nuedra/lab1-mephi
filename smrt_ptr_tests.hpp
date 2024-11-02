@@ -43,5 +43,19 @@ long measure_allocation_time(long& num_allocations) {
     return -1;
 }
 
+
+// Базовый и производный классы для тестов
+class C2 {
+public:
+    virtual ~C2() = default;
+    virtual int getValue() const { return 10; }
+};
+
+class C1 : public C2 {
+public:
+    int getValue() const override { return 20; }
+};
+
+
 #endif
 

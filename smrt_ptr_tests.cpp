@@ -122,6 +122,36 @@ int functional_smrt_ptr_tests() {
         assert(false);  // Этот assert не должен быть достигнут
     }, true);
 
+    // Тест 9: Подтипизация и присваивание подтипов
+    failed_tests += run_test("Test 9: Subtyping Assignment", []() {
+        smrt_ptr<C1> derivedPtr(new C1());
+        smrt_ptr<C2> basePtr = derivedPtr;
+
+        assert(basePtr->getValue() == 20);
+        assert(derivedPtr.use_count() == 2);
+    });
+
+    // Тест 10: Проверка счётчика ссылок при подтипизации
+    failed_tests += run_test("Test 10: Reference Counting with Subtyping", []() {
+        smrt_ptr<C1> derivedPtr1(new C1());
+        smrt_ptr<C2> basePtr1 = derivedPtr1;
+
+        assert(basePtr1.use_count() == 2);
+
+        smrt_ptr<C2> basePtr2 = basePtr1;
+        assert(basePtr1.use_count() == 3);
+    });
+
+    failed_tests += run_test("Test 11: Subtyping Assignment for []", []() {
+        smrt_ptr<C1[]> derivedPtr(new C1[3]);
+        smrt_ptr<C2[]> basePtr;
+        basePtr = derivedPtr;
+
+
+        assert(basePtr[0].getValue() == 20);
+        assert(derivedPtr.use_count() == 2);
+    });
+
     return failed_tests;
 }
 
@@ -198,6 +228,7 @@ int functional_linked_list_tests() {
 
     return failed_tests;
 }
+
 
 
 
