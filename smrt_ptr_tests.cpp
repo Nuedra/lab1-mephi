@@ -7,6 +7,8 @@
 #include "smrt_ptr_tests.hpp"
 #include "linked_list.hpp"
 #include <cassert>
+#include <memory>
+#include <utility>
 
 
 void log_error(const std::string& test_name, const std::string& message) {
@@ -239,6 +241,81 @@ int functional_linked_list_tests() {
 }
 
 
+// Заполнения векторов для отрисовки графиков
+
+// Функция для генерации размеров тестов
+std::vector<int> generate_test_sizes(int start_size, int end_size, int step_size) {
+    std::vector<int> test_sizes;
+    for (int size = start_size; size <= end_size; size += step_size) {
+        test_sizes.push_back(size);
+    }
+    return test_sizes;
+}
+
+// Функция тестирования для smrt_ptr
+std::vector<std::pair<long, long>> load_smrt_ptr_tests(int start_size, int end_size, int step_size) {
+    std::vector<std::pair<long, long>> results;
+    std::vector<int> test_sizes = generate_test_sizes(start_size, end_size, step_size);
+
+    for (int test_size : test_sizes) {
+        auto start = std::chrono::high_resolution_clock::now();
+        {
+            std::vector<smrt_ptr<int>> pointers;
+            smrt_ptr<int> sptr(new int(3));
+            for (int i = 0; i < test_size; ++i) {
+                pointers.push_back(sptr);
+            }
+        }
+
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::high_resolution_clock::now() - start).count();
+        results.emplace_back(test_size, duration);
+    }
+
+    return results;
+}
+
+// Функция тестирования для unique_ptr
+std::vector<std::pair<long, long>> load_unique_ptr_tests(int start_size, int end_size, int step_size) {
+    std::vector<std::pair<long, long>> results;
+    std::vector<int> test_sizes = generate_test_sizes(start_size, end_size, step_size);
+
+    for (int test_size : test_sizes) {
+        auto start = std::chrono::high_resolution_clock::now();
+        std::vector<std::unique_ptr<int>> pointers;
+        for (int i = 0; i < test_size; ++i) {
+            pointers.push_back(std::make_unique<int>(i));
+        }
+
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::high_resolution_clock::now() - start).count();
+        results.emplace_back(test_size, duration);
+    }
+
+    return results;
+}
+
+// Функция заполнения для shared_ptr
+std::vector<std::pair<long, long>> load_shrd_ptr_tests(int start_size, int end_size, int step_size) {
+    std::vector<std::pair<long, long>> results;
+    std::vector<int> test_sizes = generate_test_sizes(start_size, end_size, step_size);
+
+    for (int test_size : test_sizes) {
+        auto start = std::chrono::high_resolution_clock::now();
+
+        std::vector<std::shared_ptr<int>> pointers;
+        for (int i = 0; i < test_size; ++i) {
+            pointers.push_back(std::make_shared<int>(i));
+        }
+
+
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::high_resolution_clock::now() - start).count();
+        results.emplace_back(test_size, duration);
+    }
+
+    return results;
+}
 
 
 

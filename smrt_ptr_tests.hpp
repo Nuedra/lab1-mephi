@@ -1,8 +1,8 @@
 #ifndef SMRTPTR_TEST_h
 #define SMRTPTR_TEST_h
+
 #include <vector>
 #include <chrono>
-#include <memory>
 #include <iostream>
 #include <exception>
 
@@ -58,10 +58,11 @@ public:
 
 // Для Графиков
 
-std::vector<std::pair<int, long long>> loadUnqPtrTests();
-std::vector<std::pair<int, long long>> loadShrdPtrTests();
-std::vector<std::pair<int, long long>> loadStdShrdPtrTests();
-std::vector<std::pair<int, long long>> loadStdUnqPtrTests();
+std::vector<int> generate_test_sizes(int start_size, int end_size, int step_size);
+
+std::vector<std::pair<long, long>> load_smrt_ptr_tests(int start_size, int end_size, int step_size);
+std::vector<std::pair<long, long>> load_unique_ptr_tests(int start_size, int end_size, int step_size);
+std::vector<std::pair<long, long>> load_shrd_ptr_tests(int start_size, int end_size, int step_size);
 
 #endif
 

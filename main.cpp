@@ -1,7 +1,8 @@
+#include <SFML/Graphics.hpp>
 #include <iostream>
 #include <sstream>
 #include <memory>
-
+#include "graphic.hpp"
 #include "smrt_ptr.hpp"
 #include "smrt_ptr_tests.hpp"
 
@@ -105,7 +106,7 @@ int main() {
                 break;
 
             case 4:
-                std::cout << "Функция графики в разработке.\n";
+                create_graphic();
                 break;
         }
 
