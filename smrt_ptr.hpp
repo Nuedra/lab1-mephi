@@ -2,8 +2,6 @@
 #define LAB1_SMRT_PTR_HPP
 
 #include <stdexcept>
-#include <type_traits>
-#include <stdexcept>
 
 template <typename T>
 class smrt_ptr {
@@ -46,6 +44,7 @@ public:
             ref_count = other.ref_count;
             ++(*ref_count);
         }
+
         return *this;
     }
 
@@ -58,6 +57,7 @@ public:
             ref_count = other.ref_count;
             ++(*ref_count);
         }
+
         return *this;
     }
 
@@ -113,6 +113,7 @@ public:
         if (!ptr) {
             throw std::bad_cast();
         }
+
         ++(*ref_count);
     }
 
@@ -128,6 +129,7 @@ public:
             ref_count = other.ref_count;
             ++(*ref_count);
         }
+
         return *this;
     }
 
@@ -135,13 +137,16 @@ public:
     template <typename U>
     smrt_ptr<T[]>& operator=(const smrt_ptr<U[]>& other) {
         T* temp_ptr = dynamic_cast<T*>(other.ptr);  // Проверка приведения типа
+
         if (!temp_ptr) {
             throw std::bad_cast();
         }
+
         release();
         ptr = temp_ptr;
         ref_count = other.ref_count;
         ++(*ref_count);
+
         return *this;
     }
 

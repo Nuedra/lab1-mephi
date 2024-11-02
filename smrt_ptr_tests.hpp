@@ -56,6 +56,12 @@ public:
     int getValue() const override { return 20; }
 };
 
+// Для Графиков
+
+std::vector<std::pair<int, long long>> loadUnqPtrTests();
+std::vector<std::pair<int, long long>> loadShrdPtrTests();
+std::vector<std::pair<int, long long>> loadStdShrdPtrTests();
+std::vector<std::pair<int, long long>> loadStdUnqPtrTests();
 
 #endif
 

@@ -81,6 +81,7 @@ int functional_smrt_ptr_tests() {
         smrt_ptr<int> p1(new int(30));
         smrt_ptr<int> p2;
         p2 = p1;
+
         assert(p1.use_count() == 2);
         assert(p2.use_count() == 2);
         assert(*p2 == 30);
@@ -89,6 +90,7 @@ int functional_smrt_ptr_tests() {
     failed_tests += run_test("Test 4: Self-assignment Handling", []() {
         smrt_ptr<int> p1(new int(40));
         p1 = p1;
+
         assert(p1.use_count() == 1);
         assert(*p1 == 40);
     });
@@ -98,12 +100,14 @@ int functional_smrt_ptr_tests() {
             int val;
             TestStruct(int v) : val(v) {}
         };
+
         smrt_ptr<TestStruct> p1(new TestStruct(50));
         assert(p1->val == 50);
     });
 
     failed_tests += run_test("Test 6: Array Access for smrt_ptr<T[]>", []() {
         smrt_ptr<int[]> p1(new int[3]{1, 2, 3});
+
         assert(p1[0] == 1);
         assert(p1[1] == 2);
         assert(p1[2] == 3);
@@ -112,6 +116,7 @@ int functional_smrt_ptr_tests() {
     failed_tests += run_test("Test 7: Null Dereference Exception", []() {
         smrt_ptr<int> p1(nullptr);
         *p1;  // Ожидается, что бросит исключение
+
         assert(false);  // Этот assert не должен быть достигнут
     }, true);
 
@@ -120,6 +125,7 @@ int functional_smrt_ptr_tests() {
         smrt_ptr<int[]> p1(nullptr);
         p1[0];  // Ожидается, что бросит исключение
         assert(false);  // Этот assert не должен быть достигнут
+
     }, true);
 
     // Тест 9: Подтипизация и присваивание подтипов
@@ -144,8 +150,7 @@ int functional_smrt_ptr_tests() {
 
     failed_tests += run_test("Test 11: Subtyping Assignment for []", []() {
         smrt_ptr<C1[]> derivedPtr(new C1[3]);
-        smrt_ptr<C2[]> basePtr;
-        basePtr = derivedPtr;
+        smrt_ptr<C2[]> basePtr = derivedPtr;
 
 
         assert(basePtr[0].getValue() == 20);
@@ -160,6 +165,7 @@ int functional_linked_list_tests() {
 
     failed_tests += run_test("Test 1: Default Constructor and Size", [](){
         linked_list<int> list;
+
         assert(list.size() == 0);
         assert(list.null());
     });
@@ -167,6 +173,7 @@ int functional_linked_list_tests() {
     failed_tests += run_test("Test 2: Push Front and Get Front", [](){
         linked_list<int> list;
         list.push_front(10);
+
         assert(list.size() == 1);
         assert(list.get_front() == 10);
     });
@@ -176,6 +183,7 @@ int functional_linked_list_tests() {
         list.push_front(10);
         list.push_front(20);
         list.push_front(30);
+
         assert(list.size() == 3);
         assert(list.get_front() == 30);
     });
@@ -206,6 +214,7 @@ int functional_linked_list_tests() {
         list.push_front(20);
         list.push_front(30);
         list.clear();
+
         assert(list.size() == 0);
         assert(list.null());
     });
