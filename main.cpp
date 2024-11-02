@@ -106,7 +106,7 @@ int main() {
                 break;
 
             case 4:
-                create_graphic();
+                create_graphic(10000, 100000, 10000);
                 break;
         }
 

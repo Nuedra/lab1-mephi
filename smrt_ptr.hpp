@@ -61,12 +61,12 @@ public:
         return *this;
     }
 
-    T& operator*() const {
+    const T& operator*() const {
         if (ptr != nullptr) return *ptr;
         throw std::logic_error("Error: null pointer dereference");
     }
 
-    T* operator->() const {
+    const T* operator->() const {
         if (ptr != nullptr) return ptr;
         throw std::logic_error("Error: null pointer access");
     }

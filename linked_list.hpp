@@ -23,7 +23,7 @@ public:
 
     void push_front(const T& value) {
         smrt_ptr<Node<T>> newNode(new Node<T>(value));
-        newNode->next = std::move(head);
+        newNode->next = head;
         head = std::move(newNode);
         ++length;
     }

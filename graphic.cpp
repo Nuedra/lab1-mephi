@@ -53,10 +53,10 @@ void draw_axis_labels(sf::RenderWindow& window, sf::Font& font, float padding) {
     window.draw(y_label);
 }
 
-void create_graphic() {
-    std::vector<std::pair<long, long>> coordinates_1 = load_smrt_ptr_tests(100000, 1000000, 100000);
-    std::vector<std::pair<long, long>> coordinates_2 = load_shrd_ptr_tests(100000, 1000000, 100000);
-    std::vector<std::pair<long, long>> coordinates_3 = load_unique_ptr_tests(100000, 1000000, 100000);
+void create_graphic(int start_size, int end_size, int step_size) {
+    std::vector<std::pair<long, long>> coordinates_1 = load_smrt_ptr_tests(start_size, end_size, step_size);
+    std::vector<std::pair<long, long>> coordinates_2 = load_shrd_ptr_tests(start_size, end_size, step_size);
+    std::vector<std::pair<long, long>> coordinates_3 = load_unique_ptr_tests(start_size, end_size, step_size);
 
     const int window_width = 800;
     const int window_height = 600;
