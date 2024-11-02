@@ -3,8 +3,8 @@
 #include <vector>
 #include <chrono>
 #include <exception>
-#include "smrtptr.hpp"
-#include "smrtptr_tests.hpp"
+#include "smrt_ptr.hpp"
+#include "smrt_ptr_tests.hpp"
 #include "linked_list.hpp"
 #include <cassert>
 
@@ -36,42 +36,40 @@ int run_test(const std::string& test_name, Func test_func, const bool silent) {
     return local_failed_tests;
 }
 
-int functional_SmrtPtr_tests() {
+int functional_smrt_ptr_tests() {
     int failed_tests = 0;
 
-    // Test 1: Default Constructor and Dereference
-    failed_tests += run_test("Test 1: Default Constructor and Dereference", []() {
-        SmrtPtr<int> p1(new int(10));
+    failed_tests += run_test("Test 1: Constructor and Dereference", []() {
+        smrt_ptr<int> p1(new int(10));
         assert(*p1 == 10);
         assert(p1.use_count() == 1);
 
-        SmrtPtr<std::string> p2(new std::string("Hello"));
+        smrt_ptr<std::string> p2(new std::string("Hello"));
         assert(*p2 == "Hello");
         assert(p2.use_count() == 1);
 
-        SmrtPtr<std::vector<int>> p3(new std::vector<int>{1, 2, 3});
+        smrt_ptr<std::vector<int>> p3(new std::vector<int>{1, 2, 3});
         assert((*p3)[0] == 1);
         assert((*p3)[1] == 2);
         assert((*p3)[2] == 3);
         assert(p3.use_count() == 1);
     });
 
-    // Test 2: Copy Constructor
     failed_tests += run_test("Test 2: Copy Constructor", []() {
-        SmrtPtr<int> p1(new int(20));
-        SmrtPtr<int> p2(p1);
+        smrt_ptr<int> p1(new int(20));
+        smrt_ptr<int> p2(p1);
         assert(p1.use_count() == 2);
         assert(p2.use_count() == 2);
         assert(*p2 == 20);
 
-        SmrtPtr<std::string> p3(new std::string("World"));
-        SmrtPtr<std::string> p4(p3);
+        smrt_ptr<std::string> p3(new std::string("World"));
+        smrt_ptr<std::string> p4(p3);
         assert(p3.use_count() == 2);
         assert(p4.use_count() == 2);
         assert(*p4 == "World");
 
-        SmrtPtr<std::vector<int>> p5(new std::vector<int>{4, 5, 6});
-        SmrtPtr<std::vector<int>> p6(p5);
+        smrt_ptr<std::vector<int>> p5(new std::vector<int>{4, 5, 6});
+        smrt_ptr<std::vector<int>> p6(p5);
         assert(p5.use_count() == 2);
         assert(p6.use_count() == 2);
         assert((*p6)[0] == 4);
@@ -79,52 +77,47 @@ int functional_SmrtPtr_tests() {
         assert((*p6)[2] == 6);
     });
 
-    // Test 3: Assignment Operator
     failed_tests += run_test("Test 3: Assignment Operator", []() {
-        SmrtPtr<int> p1(new int(30));
-        SmrtPtr<int> p2;
+        smrt_ptr<int> p1(new int(30));
+        smrt_ptr<int> p2;
         p2 = p1;
         assert(p1.use_count() == 2);
         assert(p2.use_count() == 2);
         assert(*p2 == 30);
     });
 
-    // Test 4: Self-assignment Handling
     failed_tests += run_test("Test 4: Self-assignment Handling", []() {
-        SmrtPtr<int> p1(new int(40));
+        smrt_ptr<int> p1(new int(40));
         p1 = p1;
         assert(p1.use_count() == 1);
         assert(*p1 == 40);
     });
 
-    // Test 5: Arrow Operator
     failed_tests += run_test("Test 5: Arrow Operator", []() {
         struct TestStruct {
             int val;
             TestStruct(int v) : val(v) {}
         };
-        SmrtPtr<TestStruct> p1(new TestStruct(50));
+        smrt_ptr<TestStruct> p1(new TestStruct(50));
         assert(p1->val == 50);
     });
 
-    // Test 6: Array Access for SmrtPtr<T[]>
-    failed_tests += run_test("Test 6: Array Access for SmrtPtr<T[]>", []() {
-        SmrtPtr<int[]> p1(new int[3]{1, 2, 3});
+    failed_tests += run_test("Test 6: Array Access for smrt_ptr<T[]>", []() {
+        smrt_ptr<int[]> p1(new int[3]{1, 2, 3});
         assert(p1[0] == 1);
         assert(p1[1] == 2);
         assert(p1[2] == 3);
     });
 
-    // Test 7: Null Dereference Exception
     failed_tests += run_test("Test 7: Null Dereference Exception", []() {
-        SmrtPtr<int> p1(nullptr);
+        smrt_ptr<int> p1(nullptr);
         *p1;  // Ожидается, что бросит исключение
         assert(false);  // Этот assert не должен быть достигнут
     }, true);
 
-    // Test 8: Null Array Access Exception
+
     failed_tests += run_test("Test 8: Null Array Access Exception", []() {
-        SmrtPtr<int[]> p1(nullptr);
+        smrt_ptr<int[]> p1(nullptr);
         p1[0];  // Ожидается, что бросит исключение
         assert(false);  // Этот assert не должен быть достигнут
     }, true);
@@ -132,27 +125,24 @@ int functional_SmrtPtr_tests() {
     return failed_tests;
 }
 
-int functional_LinkedList_tests() {
+int functional_linked_list_tests() {
     int failed_tests = 0;
 
-    // Test 1: Default Constructor and Size
     failed_tests += run_test("Test 1: Default Constructor and Size", [](){
-        LinkedList<int> list;
+        linked_list<int> list;
         assert(list.size() == 0);
         assert(list.null());
     });
 
-    // Test 2: Push Front and Get Front
     failed_tests += run_test("Test 2: Push Front and Get Front", [](){
-        LinkedList<int> list;
+        linked_list<int> list;
         list.push_front(10);
         assert(list.size() == 1);
         assert(list.get_front() == 10);
     });
 
-    // Test 3: Multiple Push Fronts and Size Check
     failed_tests += run_test("Test 3: Multiple Push Fronts and Size Check", [](){
-        LinkedList<int> list;
+        linked_list<int> list;
         list.push_front(10);
         list.push_front(20);
         list.push_front(30);
@@ -160,9 +150,8 @@ int functional_LinkedList_tests() {
         assert(list.get_front() == 30);
     });
 
-    // Test 4: Pop Front and Size Check
     failed_tests += run_test("Test 4: Pop Front and Size Check", [](){
-        LinkedList<int> list;
+        linked_list<int> list;
         list.push_front(10);
         list.push_front(20);
         list.push_front(30);
@@ -180,9 +169,9 @@ int functional_LinkedList_tests() {
         assert(list.null());
     });
 
-    // Test 5: Clear and Null Check
+
     failed_tests += run_test("Test 5: Clear and Null Check", [](){
-        LinkedList<int> list;
+        linked_list<int> list;
         list.push_front(10);
         list.push_front(20);
         list.push_front(30);
@@ -191,9 +180,8 @@ int functional_LinkedList_tests() {
         assert(list.null());
     });
 
-    // Test 6: Mixed Operations
     failed_tests += run_test("Test 6: Mixed Operations", [](){
-        LinkedList<int> list;
+        linked_list<int> list;
         list.push_front(10);
         assert(list.get_front() == 10);
 

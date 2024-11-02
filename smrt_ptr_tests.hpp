@@ -12,8 +12,8 @@ void log_error(const std::string& test_name, const std::string& message);
 template <typename Func>
 int run_test(const std::string& test_name, Func test_func, bool silent = false);
 
-int functional_SmrtPtr_tests();
-int functional_LinkedList_tests();
+int functional_smrt_ptr_tests();
+int functional_linked_list_tests();
 
 
 template <template <typename> class PtrType>
@@ -41,13 +41,6 @@ long measure_allocation_time(long& num_allocations) {
     }
 
     return -1;
-}
-
-template <template <typename> class PtrType>
-long run_load_tests(long& num_allocations) {
-    long duration = measure_allocation_time<PtrType>(num_allocations);
-
-    return duration;
 }
 
 #endif

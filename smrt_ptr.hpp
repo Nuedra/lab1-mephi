@@ -1,10 +1,10 @@
-#ifndef LAB1_SMRTPTR_HPP
-#define LAB1_SMRTPTR_HPP
+#ifndef LAB1_SMRT_PTR_HPP
+#define LAB1_SMRT_PTR_HPP
 
 #include <stdexcept>
 
 template <typename T>
-class SmrtPtr {
+class smrt_ptr {
 private:
     T* ptr;                  // Указатель на управляемый объект
     size_t* ref_count;       // Указатель на счетчик ссылок
@@ -18,20 +18,20 @@ private:
 
 public:
     // Конструктор по умолчанию
-    explicit SmrtPtr(T *p = nullptr) : ptr(p), ref_count(new size_t(1)) {}
+    explicit smrt_ptr(T *p = nullptr) : ptr(p), ref_count(new size_t(1)) {}
 
     // Копирующий конструктор
-    SmrtPtr(const SmrtPtr<T> &other) : ptr(other.ptr), ref_count(other.ref_count) {
+    smrt_ptr(const smrt_ptr<T> &other) : ptr(other.ptr), ref_count(other.ref_count) {
         ++(*ref_count);
     }
 
     // Деструктор
-    ~SmrtPtr() {
+    ~smrt_ptr() {
         release();
     }
 
-    // Оператор присваивания
-    SmrtPtr<T>& operator=(const SmrtPtr<T> &other) {
+    // Оператор присваивания для идентичных типов
+    smrt_ptr<T>& operator=(const smrt_ptr<T> &other) {
         if (this != &other) {
             release();
             ptr = other.ptr;
@@ -43,12 +43,12 @@ public:
 
     T& operator*() const {
         if (ptr != nullptr) return *ptr;
-        throw std::logic_error("Errbvcbcvbcvor!");
+        throw std::logic_error("Error: null pointer dereference");
     }
 
     T* operator->() const {
         if (ptr != nullptr) return ptr;
-        throw std::logic_error("Error!");
+        throw std::logic_error("Error: null pointer access");
     }
 
 
@@ -65,7 +65,7 @@ public:
 
 
 template <typename T>
-class SmrtPtr<T[]> {
+class smrt_ptr<T[]> {
 private:
     T* ptr;
     size_t* ref_count;
@@ -79,20 +79,20 @@ private:
 
 public:
     // Конструктор по умолчанию
-    explicit SmrtPtr(T *p = nullptr) : ptr(p), ref_count(new size_t(1)) {}
+    explicit smrt_ptr(T *p = nullptr) : ptr(p), ref_count(new size_t(1)) {}
 
     // Копирующий конструктор
-    SmrtPtr(const SmrtPtr<T[]> &other) : ptr(other.ptr), ref_count(other.ref_count) {
+    smrt_ptr(const smrt_ptr<T[]> &other) : ptr(other.ptr), ref_count(other.ref_count) {
         ++(*ref_count);
     }
 
 
-    ~SmrtPtr() {
+    ~smrt_ptr() {
         release();
     }
 
     // Оператор присваивания
-    SmrtPtr<T[]>& operator=(const SmrtPtr<T[]> &other) {
+    smrt_ptr<T[]>& operator=(const smrt_ptr<T[]> &other) {
         if (this != &other) {
             release();
             ptr = other.ptr;
@@ -104,17 +104,17 @@ public:
 
     T& operator*() const {
         if (ptr != nullptr) return *ptr;
-        throw std::logic_error("Error!");
+        throw std::logic_error("Error: null pointer dereference!");
     }
 
     T* operator->() const {
         if (ptr != nullptr) return ptr;
-        throw std::logic_error("Error!");
+        throw std::logic_error("Error: null pointer access");
     }
 
     T& operator[](size_t index) const {
         if (ptr != nullptr) return ptr[index];
-        throw std::logic_error("Error!");
+        throw std::logic_error("Error");
     }
 
 
@@ -123,4 +123,4 @@ public:
     }
 };
 
-#endif //LAB1_SMRTPTR_HPP
+#endif //LAB1_SMRT_PTR_HPP

@@ -1,40 +1,40 @@
 #ifndef LINKED_LIST_HPP
 #define LINKED_LIST_HPP
 
-#include "smrtptr.hpp"
+#include "smrt_ptr.hpp"
 
 
 template<typename T>
 struct Node {
     T data;
-    SmrtPtr<Node<T>> next;
+    smrt_ptr<Node<T>> next;
 
     explicit Node(T val) : data(val), next(nullptr) {}
 };
 
 template<typename T>
-class LinkedList {
+class linked_list {
 private:
-    SmrtPtr<Node<T>> head;
+    smrt_ptr<Node<T>> head;
     size_t length;
 
 public:
-    LinkedList() : head(nullptr), length(0) {}
+    linked_list() : head(nullptr), length(0) {}
 
     void push_front(const T& value) {
-        SmrtPtr<Node<T>> newNode(new Node<T>(value));
+        smrt_ptr<Node<T>> newNode(new Node<T>(value));
         newNode->next = std::move(head);
         head = std::move(newNode);
         ++length;
     }
 
-    bool null() const {
+    [[nodiscard]] bool null() const {
         return head.null();
     }
 
     void pop_front() {
         if (!head.null()) {
-            SmrtPtr<Node<T>> oldHead = std::move(head);
+            smrt_ptr<Node<T>> oldHead = std::move(head);
             head = std::move(oldHead->next);
             --length;
         }
@@ -44,10 +44,10 @@ public:
         if (!head.null()) {
             return head->data;
         }
-        throw std::out_of_range("List is empty");
+        throw std::out_of_range("Empty");
     }
 
-    size_t size() const {
+    [[nodiscard]] size_t size() const {
         return length;
     }
 
@@ -57,7 +57,7 @@ public:
         }
     }
 
-    ~LinkedList(){
+    ~linked_list(){
         clear();
     }
 

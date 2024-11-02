@@ -4,8 +4,8 @@ project(lab1)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(lab1 main.cpp
-        smrtptr.hpp
+        smrt_ptr.hpp
         linked_list.hpp
-        smrtptr_tests.cpp
-        smrtptr_tests.hpp
+        smrt_ptr_tests.cpp
+        smrt_ptr_tests.hpp
 )
